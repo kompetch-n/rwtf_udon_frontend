@@ -15,7 +15,7 @@ function RunnerManagement() {
   const fetchRunners = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/runners");
+      const res = await fetch("https://rwtf-udon-backend.vercel.app/runners");
       const data = await res.json();
       setRunners(data.data || []);
     } catch (err) {
@@ -65,7 +65,7 @@ const handleUpdate = async (e) => {
   if (file) formData.append("file", file);
 
   try {
-    const res = await fetch(`http://localhost:8000/runner/${editRunner._id}`, {
+    const res = await fetch(`https://rwtf-udon-backend.vercel.app/runner/${editRunner._id}`, {
       method: "PUT",
       body: formData,
     });
@@ -87,7 +87,7 @@ const handleUpdate = async (e) => {
   const handleDelete = async (id) => {
     if (!window.confirm("ต้องการลบข้อมูลใช่หรือไม่?")) return;
     try {
-      await fetch(`http://localhost:8000/runner/${id}`, { method: "DELETE" });
+      await fetch(`https://rwtf-udon-backend.vercel.app/runner/${id}`, { method: "DELETE" });
       fetchRunners();
     } catch (err) {
       console.error(err);

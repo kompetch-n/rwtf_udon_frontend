@@ -48,7 +48,7 @@ function RegisterRunner() {
     if (file) formData.append("file", file);
 
     try {
-      const res = await fetch("http://localhost:8000/register-runner", {
+      const res = await fetch("https://rwtf-udon-backend.vercel.app/register-runner", {
         method: "POST",
         body: formData,
       });

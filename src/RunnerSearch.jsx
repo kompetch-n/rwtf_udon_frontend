@@ -10,7 +10,7 @@ function RunnerSearch() {
     if (!query) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/runners`);
+      const res = await fetch(`https://rwtf-udon-backend.vercel.app/runners`);
       const data = await res.json();
       const matched = data.data.find(
         (runner) =>
