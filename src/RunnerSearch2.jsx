@@ -58,15 +58,6 @@ function RunnerSearch() {
         <FaGlobe className="text-gray-700" />
       </button>
 
-      {/* --- LOGO ด้านบน --- */}
-      <div className="flex justify-center mb-6 mt-2">
-        <img
-          src="/rwtf_logo.svg"
-          alt="logo"
-          className="h-36 object-contain drop-shadow-lg"
-        />
-      </div>
-
       <h2 className="text-3xl font-bold mb-6 text-center text-gray-700">
         {text[lang].title}
       </h2>
