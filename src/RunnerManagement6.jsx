@@ -188,96 +188,24 @@ function RunnerManagement() {
 
       {/* Edit Form Modal */}
       {editRunner && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start overflow-auto z-50 pt-12">
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-xl p-6 animate-slideIn">
-            {/* Profile Image */}
-            <div className="flex justify-center mb-4">
-              {/* Wrapper for profile + icon */}
-              <div className="relative w-32 h-32">
-                {/* Profile Picture */}
-                <img
-                  src={preview || editRunner.image_url || MOCK_AVATAR}
-                  alt={editRunner.full_name}
-                  className="w-32 h-32 object-cover rounded-full border-4 border-blue-300 shadow-lg cursor-pointer"
-                  onClick={() => document.getElementById("fileInput").click()}
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start overflow-auto z-50 pt-16">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 animate-slideIn">
+            <h3 className="text-2xl font-bold mb-4 text-gray-800">แก้ไขข้อมูล: {editRunner.full_name}</h3>
+            <form onSubmit={handleUpdate} className="grid grid-cols-1 gap-3">
+              {["full_name", "phone", "citizen_id", "reward", "distance", "shirt_size", "bib", "medical_condition", "medications", "note"].map((field) => (
+                <input
+                  key={field}
+                  name={field}
+                  placeholder={field.replace("_", " ")}
+                  value={form[field] || ""}
+                  onChange={handleChange}
+                  className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
-
-                {/* Camera Icon Box (Subtle) */}
-                <div
-                  className="absolute bottom-1 right-1 bg-gray-300 w-7 h-7 flex items-center justify-center rounded-full border border-white shadow-sm cursor-pointer hover:bg-gray-400 transition"
-                  onClick={() => document.getElementById("fileInput").click()}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-gray-700"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l2-3h4l2 3h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V10a2 2 0 012-2z"
-                    />
-                    <circle cx="12" cy="14" r="3" stroke="gray" strokeWidth={2} />
-                  </svg>
-                </div>
-              </div>
-
-              <input
-                id="fileInput"
-                type="file"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-            </div>
-
-            {/* Header */}
-            <h3 className="text-2xl font-bold text-center text-gray-800 mb-6">
-              แก้ไขข้อมูล: {editRunner.full_name}
-            </h3>
-
-            {/* Form */}
-            <form onSubmit={handleUpdate} className="grid grid-cols-1 gap-4">
-              {/* Personal Info */}
-              <div className="grid grid-cols-2 gap-4">
-                {["full_name", "phone", "citizen_id", "bib", "shirt_size", "distance", "reward"].map((field) => (
-                  <div key={field} className="flex flex-col">
-                    <label className="text-gray-700 font-medium mb-1">
-                      {field.replace("_", " ")}
-                    </label>
-                    <input
-                      name={field}
-                      value={form[field] || ""}
-                      onChange={handleChange}
-                      className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    />
-                  </div>
-                ))}
-              </div>
-
-              {/* Medical Info */}
-              <div className="grid grid-cols-1 gap-2">
-                {["medical_condition", "medications", "note"].map((field) => (
-                  <div key={field} className="flex flex-col">
-                    <label className="text-gray-700 font-medium mb-1">
-                      {field.replace("_", " ")}
-                    </label>
-                    <textarea
-                      name={field}
-                      value={form[field] || ""}
-                      onChange={handleChange}
-                      className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
-                      rows={field === "note" ? 3 : 2}
-                    />
-                  </div>
-                ))}
-              </div>
+              ))}
 
               {/* Checkbox group */}
-              <div className="flex flex-wrap gap-4 mt-2">
-                {/* <label className="flex items-center space-x-2">
+              <div className="flex items-center space-x-4">
+                <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
                     name="shirt_status"
@@ -297,7 +225,7 @@ function RunnerManagement() {
                     className="accent-purple-500"
                   />
                   <span className="text-gray-700 font-medium">ลงทะเบียนแล้ว</span>
-                </label> */}
+                </label>
 
                 <label className="flex items-center space-x-2">
                   <input
@@ -311,67 +239,31 @@ function RunnerManagement() {
                 </label>
               </div>
 
-              {/* Checkbox as Large Icon Buttons */}
-              <div className="flex justify-center gap-10 mt-4">
-                {/* Shirt Status */}
-                <div
-                  className={`flex flex-col items-center cursor-pointer transition-transform ${form.shirt_status ? "scale-110" : ""
-                    }`}
-                  onClick={() =>
-                    setForm({ ...form, shirt_status: !form.shirt_status })
-                  }
-                >
-                  <FaTshirt
-                    className={`w-14 h-14 ${form.shirt_status ? "text-blue-500" : "text-gray-300"
-                      }`}
-                  />
-                  <span className="text-gray-700 mt-1 font-medium text-sm">
-                    รับเสื้อแล้ว
-                  </span>
-                </div>
+              <input type="file" onChange={handleFileChange} className="mt-2" />
+              {preview && (
+                <img
+                  src={preview}
+                  className="mt-2 w-32 h-32 object-cover rounded-full mx-auto shadow-md"
+                  alt="Preview"
+                />
+              )}
 
-                {/* Registration Status */}
-                <div
-                  className={`flex flex-col items-center cursor-pointer transition-transform ${form.registration_status ? "scale-110" : ""
-                    }`}
-                  onClick={() =>
-                    setForm({ ...form, registration_status: !form.registration_status })
-                  }
-                >
-                  <FaClipboardCheck
-                    className={`w-14 h-14 ${form.registration_status ? "text-purple-500" : "text-gray-300"
-                      }`}
-                  />
-                  <span className="text-gray-700 mt-1 font-medium text-sm">
-                    ลงทะเบียนแล้ว
-                  </span>
-                </div>
-              </div>
-
-              {/* File Upload */}
-              {/* <div className="mt-2 flex flex-col items-center">
-                <label className="text-gray-700 font-medium mb-1">อัปโหลดรูปโปรไฟล์</label>
-                <input type="file" onChange={handleFileChange} className="w-full" />
-              </div> */}
-
-              {/* Action Buttons */}
-              <div className="flex justify-between mt-4 gap-2 flex-wrap">
+              <div className="flex justify-between mt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition shadow-md"
+                  className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition shadow-md"
                 >
                   บันทึกการแก้ไข
                 </button>
                 <button
                   type="button"
                   onClick={() => handleDelete(editRunner._id)}
-                  className="flex-1 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition shadow-md"
+                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition shadow-md"
                 >
                   ลบ
                 </button>
               </div>
 
-              {/* Cancel */}
               <button
                 type="button"
                 onClick={() => {
@@ -380,7 +272,7 @@ function RunnerManagement() {
                   setFile(null);
                   setPreview(null);
                 }}
-                className="mt-2 w-full text-center text-gray-600 hover:text-gray-800 underline"
+                className="mt-2 text-gray-600 hover:text-gray-800 underline"
               >
                 ยกเลิก
               </button>
@@ -388,7 +280,6 @@ function RunnerManagement() {
           </div>
         </div>
       )}
-
     </div>
   );
 }

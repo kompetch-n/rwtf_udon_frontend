@@ -14,6 +14,7 @@ function RegisterRunner() {
     hospital: "",
     medications: "",
     note: "",
+    registration_status: false,
   });
 
   const [file, setFile] = useState(null);
@@ -53,7 +54,16 @@ function RegisterRunner() {
         body: formData,
       });
 
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("HTTP error:", res.status, text);
+        alert(`เกิดข้อผิดพลาด HTTP: ${res.status}`);
+        return;
+      }
+
       const data = await res.json();
+      console.log("API response:", data);  // <-- ดูข้อมูลใน console
+
       setResult(data);
 
       // ล้างฟอร์ม
@@ -70,18 +80,13 @@ function RegisterRunner() {
         hospital: "",
         medications: "",
         note: "",
+        registration_status: false,
       });
-
       setFile(null);
       setPreview(null);
 
-      // รีเฟรชหน้าอัตโนมัติหลัง 1.5 วินาที
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-
     } catch (error) {
-      console.error(error);
+      console.error("Fetch error:", error);
       alert("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
     } finally {
       setLoading(false);
@@ -160,6 +165,16 @@ function RegisterRunner() {
           <label className="flex items-center gap-2 text-gray-700">
             <input
               type="checkbox"
+              name="registration_status"
+              checked={form.registration_status || false}
+              onChange={(e) => setForm({ ...form, registration_status: e.target.checked })}
+            />
+            สถานะลงทะเบียน
+          </label>
+
+          <label className="flex items-center gap-2 text-gray-700">
+            <input
+              type="checkbox"
               name="health_package"
               onChange={handleChange}
             />
@@ -214,7 +229,7 @@ function RegisterRunner() {
         </button>
       </div>
 
-      {result && (
+      {result && result.data && result.data.image_url && (
         <div className="mt-6 p-4 bg-green-100 rounded-lg text-center">
           <p className="font-bold text-green-700">บันทึกสำเร็จ!</p>
           <a
@@ -227,6 +242,7 @@ function RegisterRunner() {
           </a>
         </div>
       )}
+
     </div>
   );
 }
