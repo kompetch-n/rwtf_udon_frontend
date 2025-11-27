@@ -370,53 +370,35 @@ function RunnerManagement() {
               </div> */}
 
               {/* Action Buttons */}
-              <div className="mt-6">
-                {/* Save + Cancel (บนแถวเดียวกัน) */}
-                <div className="flex justify-between gap-3">
-                  <button
-                    type="submit"
-                    className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition shadow-md"
-                  >
-                    บันทึกการแก้ไข
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setEditRunner(null);
-                      setForm({});
-                      setFile(null);
-                      setPreview(null);
-                    }}
-                    className="flex-1 bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition shadow-md"
-                  >
-                    ยกเลิก
-                  </button>
-                </div>
-
-                {/* Delete Button (อยู่ล่าง, ไอคอนถังขยะ) */}
+              <div className="flex justify-between mt-4 gap-2 flex-wrap">
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition shadow-md"
+                >
+                  บันทึกการแก้ไข
+                </button>
                 <button
                   type="button"
                   onClick={() => handleDelete(editRunner._id)}
-                  className="w-full mt-4 flex items-center justify-center gap-2 text-red-500 hover:text-red-700 transition"
+                  className="flex-1 bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition shadow-md"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                    />
-                  </svg>
-                  <span className="text-sm">ลบข้อมูล</span>
+                  ลบ
                 </button>
               </div>
+
+              {/* Cancel */}
+              <button
+                type="button"
+                onClick={() => {
+                  setEditRunner(null);
+                  setForm({});
+                  setFile(null);
+                  setPreview(null);
+                }}
+                className="mt-2 w-full text-center text-gray-600 hover:text-gray-800 underline"
+              >
+                ยกเลิก
+              </button>
             </form>
           </div>
         </div>
