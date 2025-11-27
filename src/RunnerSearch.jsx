@@ -220,7 +220,7 @@ function SectionContact({ lang, text }) {
             key={idx}
             src={src}
             alt={`Sponsor ${idx + 1}`}
-            className="h-8 w-auto object-contain"
+            className="h-10 w-auto object-contain"
           />
         ))}
       </div>
