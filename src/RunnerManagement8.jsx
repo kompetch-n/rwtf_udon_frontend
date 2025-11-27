@@ -166,7 +166,7 @@ function RunnerManagement() {
               <img
                 src={runner.image_url || MOCK_AVATAR}
                 alt={runner.full_name}
-                className="w-32 h-32 object-cover rounded-full border-6 border-gray-300 shadow-md mb-4"
+                className="w-32 h-32 object-cover rounded-full border-4 border-blue-200 shadow-md mb-4"
               />
 
               {/* Name */}
@@ -190,7 +190,7 @@ function RunnerManagement() {
 
                 {/* Registration Status */}
                 <span title={runner.registration_status ? "ลงทะเบียนแล้ว" : "ยังไม่ลงทะเบียน"}>
-                  <FaClipboardCheck className={`w-6 h-6 ${runner.registration_status ? "text-green-500" : "text-gray-400"}`} />
+                  <FaClipboardCheck className={`w-6 h-6 ${runner.registration_status ? "text-purple-500" : "text-gray-400"}`} />
                 </span>
 
                 {/* Health Package */}
@@ -329,7 +329,7 @@ function RunnerManagement() {
                     name="health_package"
                     checked={form.health_package || false}
                     onChange={handleChange}
-                    className="accent-orange-500"
+                    className="accent-green-500"
                   />
                   <span className="text-gray-700 font-medium">มี Health Package</span>
                 </label>
@@ -363,7 +363,7 @@ function RunnerManagement() {
                   }
                 >
                   <FaClipboardCheck
-                    className={`w-14 h-14 ${form.registration_status ? "text-green-500" : "text-gray-300"
+                    className={`w-14 h-14 ${form.registration_status ? "text-purple-500" : "text-gray-300"
                       }`}
                   />
                   <span className="text-gray-700 mt-1 font-medium text-sm">
