@@ -202,29 +202,8 @@ function Section({ title, img }) {
 
 // Section สำหรับ Contact แบบทันสมัย (รองรับ TH/EN)
 function SectionContact({ lang, text }) {
-  const sponsors = [
-    "/sponsor1.svg",
-    "/sponsor2.svg",
-    "/sponsor3.svg",
-    "/sponsor4.svg",
-    "/sponsor5.svg",
-    "/sponsor6.svg",
-  ];
-
   return (
     <div className="mt-10 mb-6">
-      {/* Sponsors */}
-      <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
-        {sponsors.map((src, idx) => (
-          <img
-            key={idx}
-            src={src}
-            alt={`Sponsor ${idx + 1}`}
-            className="h-8 w-auto object-contain"
-          />
-        ))}
-      </div>
-
       <h3 className="text-md font-semibold text-gray-700 mb-2">
         {text[lang].contact}
       </h3>
@@ -256,7 +235,6 @@ function SectionContact({ lang, text }) {
     </div>
   );
 }
-
 
 
 export default RunnerSearch;
