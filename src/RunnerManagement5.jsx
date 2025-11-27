@@ -173,13 +173,11 @@ function RunnerManagement() {
                 </span> */}
 
                 {/* Medical Condition */}
-                {runner.medical_condition &&
-                  runner.medical_condition.trim() !== "" &&
-                  runner.medical_condition.trim() !== "-" && (
-                    <span title={`มีโรคประจำตัว: ${runner.medical_condition}`}>
-                      <FaPills className="w-6 h-6 text-red-500" />
-                    </span>
-                  )}
+                {runner.medical_condition && runner.medical_condition.trim() !== "" && (
+                  <span title={`มีโรคประจำตัว: ${runner.medical_condition}`}>
+                    <FaPills className="w-6 h-6 text-red-500" />
+                  </span>
+                )}
               </div>
             </div>
           ))}

@@ -108,6 +108,23 @@ function RunnerManagement() {
       r.phone.includes(search)
   );
 
+  const fields = [
+    { label: "ชื่อ - นามสกุล", key: "full_name" },
+    { label: "เบอร์โทร", key: "phone" },
+    { label: "เลขบัตรประจำตัวประชาชน", key: "citizen_id" },
+    { label: "BIB", key: "bib" },
+    { label: "ขนาดเสื้อ", key: "shirt_size" },
+    { label: "ระยะทางวิ่ง", key: "distance" },
+    { label: "รางวัลที่ได้รับ", key: "reward" }
+  ];
+
+  const medicalFields = [
+    { label: "โรคประจำตัว", key: "medical_condition" },
+    { label: "ยาที่พกติดตัว", key: "medications" },
+    { label: "หมายเหตุ", key: "note" }
+  ];
+
+
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-4xl font-bold mb-6 text-center text-gray-700">จัดการนักวิ่ง</h2>
@@ -242,16 +259,15 @@ function RunnerManagement() {
             <form onSubmit={handleUpdate} className="grid grid-cols-1 gap-4">
               {/* Personal Info */}
               <div className="grid grid-cols-2 gap-4">
-                {["ชื่อ - นามสกุล", "เบอร์โทร", "เลขบัตรประจำตัวประชาชน", "BIB", "ขนาดเสื้อ", "ระยะทางวิ่ง", "รางวัลที่ได้รับ"].map((field) => (
-                  <div key={field} className="flex flex-col">
-                    <label className="text-gray-700 font-medium mb-1">
-                      {field.replace("_", " ")}
-                    </label>
+                {fields.map((f) => (
+                  <div key={f.key} className="flex flex-col">
+                    <label className="text-gray-700 font-medium mb-1">{f.label}</label>
                     <input
-                      name={field}
-                      value={form[field] || ""}
+                      name={f.key}
+                      value={form[f.key] || ""}
                       onChange={handleChange}
-                      className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                      className="w-full border border-gray-300 rounded-lg p-2 
+                   focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                     />
                   </div>
                 ))}
@@ -259,17 +275,16 @@ function RunnerManagement() {
 
               {/* Medical Info */}
               <div className="grid grid-cols-1 gap-2">
-                {["โรคประจำตัว", "ยาที่พกติดตัว", "หมายเหตุ"].map((field) => (
-                  <div key={field} className="flex flex-col">
-                    <label className="text-gray-700 font-medium mb-1">
-                      {field.replace("_", " ")}
-                    </label>
+                {medicalFields.map((f) => (
+                  <div key={f.key} className="flex flex-col">
+                    <label className="text-gray-700 font-medium mb-1">{f.label}</label>
                     <textarea
-                      name={field}
-                      value={form[field] || ""}
+                      name={f.key}
+                      value={form[f.key] || ""}
                       onChange={handleChange}
-                      className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
-                      rows={field === "note" ? 3 : 2}
+                      className="w-full border border-gray-300 rounded-lg p-2 
+                 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition resize-none"
+                      rows={f.key === "note" ? 3 : 2}
                     />
                   </div>
                 ))}
