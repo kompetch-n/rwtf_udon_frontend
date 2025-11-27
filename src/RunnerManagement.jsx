@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import { FaTshirt, FaClipboardCheck, FaHospital, FaPills } from "react-icons/fa";
 
-const MOCK_AVATAR = "https://i.pravatar.cc/150?img=65"; // รูป mockup avatar
+const MOCK_AVATAR = "/runner_profile.png"; // รูป mockup avatar
 
 function RunnerManagement() {
   const [runners, setRunners] = useState([]);
@@ -153,7 +153,7 @@ function RunnerManagement() {
               <p className="text-gray-600 text-sm">Distance: {runner.distance}</p>
 
               {/* Reward */}
-              <p className="text-gray-600 text-sm mt-1">Reward: {runner.reward}</p>
+              {/* <p className="text-gray-600 text-sm mt-1">Reward: {runner.reward}</p> */}
 
               {/* Status Icons */}
               <div className="flex space-x-4 mt-3">
@@ -242,7 +242,7 @@ function RunnerManagement() {
             <form onSubmit={handleUpdate} className="grid grid-cols-1 gap-4">
               {/* Personal Info */}
               <div className="grid grid-cols-2 gap-4">
-                {["full_name", "phone", "citizen_id", "bib", "shirt_size", "distance", "reward"].map((field) => (
+                {["ชื่อ - นามสกุล", "เบอร์โทร", "เลขบัตรประจำตัวประชาชน", "BIB", "ขนาดเสื้อ", "ระยะทางวิ่ง", "รางวัลที่ได้รับ"].map((field) => (
                   <div key={field} className="flex flex-col">
                     <label className="text-gray-700 font-medium mb-1">
                       {field.replace("_", " ")}
@@ -259,7 +259,7 @@ function RunnerManagement() {
 
               {/* Medical Info */}
               <div className="grid grid-cols-1 gap-2">
-                {["medical_condition", "medications", "note"].map((field) => (
+                {["โรคประจำตัว", "ยาที่พกติดตัว", "หมายเหตุ"].map((field) => (
                   <div key={field} className="flex flex-col">
                     <label className="text-gray-700 font-medium mb-1">
                       {field.replace("_", " ")}
