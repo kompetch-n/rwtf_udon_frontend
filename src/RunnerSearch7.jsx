@@ -6,30 +6,22 @@ function RunnerSearch() {
   const [result, setResult] = useState(null);
   const [lang, setLang] = useState("th");
   const [showActivities, setShowActivities] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
     if (!query) return;
 
-    setLoading(true);
-    setResult(null);
-
     try {
       const res = await fetch(`https://rwtf-udon-backend.vercel.app/runners`);
       const data = await res.json();
-
       const matched = data.data.find(
         (runner) =>
           runner.full_name.toLowerCase().includes(query.toLowerCase()) ||
           runner.citizen_id.includes(query)
       );
-
       setResult(matched || { notFound: true });
     } catch (err) {
       console.error(err);
     }
-
-    setLoading(false);
   };
 
   const text = {
@@ -86,7 +78,7 @@ function RunnerSearch() {
         <img
           src="/rwtf_logo.svg"
           alt="logo"
-          className="w-full max-h-48 object-contain drop-shadow-lg"
+          className="h-36 object-contain drop-shadow-lg"
         />
       </div>
 
@@ -115,12 +107,6 @@ function RunnerSearch() {
           {text[lang].search}
         </button>
       </div>
-
-      {loading && (
-        <div className="flex justify-center my-6">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-300 border-t-transparent"></div>
-        </div>
-      )}
 
       {result && (
         <div className="relative bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl shadow-xl border border-blue-200 mb-6">
@@ -203,38 +189,28 @@ function Section({ title, img }) {
 // Section สำหรับ Contact แบบทันสมัย (รองรับ TH/EN)
 function SectionContact({ lang, text }) {
   return (
-    <div className="mt-10 mb-6">
-      <h3 className="text-md font-semibold text-gray-700 mb-2">
-        {text[lang].contact}
-      </h3>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-
-        {/* Line */}
+    <div className="mb-4">
+      <h3 className="text-xl font-bold text-gray-800 mb-3">{text[lang].contact}</h3>
+      <div className="flex flex-col md:flex-row gap-4">
         <a
           href="https://line.me/R/ti/p/@bud111"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-50 border border-gray-200 
-                     rounded-full hover:bg-gray-100 transition shadow-sm"
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-green-500 text-white font-semibold rounded-xl shadow-md hover:bg-green-600 transition"
         >
-          <FaLine className="text-green-600 text-lg" />
-          <span className="text-gray-700 text-sm">Line @bud111</span>
+          <FaLine className="text-xl" />
+          <span>Line: @bud111</span>
         </a>
-
-        {/* Phone */}
         <a
           href="tel:042188999"
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-50 border border-gray-200 
-                     rounded-full hover:bg-gray-100 transition shadow-sm"
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-500 text-white font-semibold rounded-xl shadow-md hover:bg-blue-600 transition"
         >
-          <FaPhone className="text-blue-600 text-lg" />
-          <span className="text-gray-700 text-sm">Tel 042-188-999</span>
+          <FaPhone className="text-xl" />
+          <span>Tel: 042-188-999</span>
         </a>
       </div>
     </div>
   );
 }
-
 
 export default RunnerSearch;

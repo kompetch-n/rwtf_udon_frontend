@@ -6,30 +6,22 @@ function RunnerSearch() {
   const [result, setResult] = useState(null);
   const [lang, setLang] = useState("th");
   const [showActivities, setShowActivities] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleSearch = async () => {
     if (!query) return;
 
-    setLoading(true);
-    setResult(null);
-
     try {
       const res = await fetch(`https://rwtf-udon-backend.vercel.app/runners`);
       const data = await res.json();
-
       const matched = data.data.find(
         (runner) =>
           runner.full_name.toLowerCase().includes(query.toLowerCase()) ||
           runner.citizen_id.includes(query)
       );
-
       setResult(matched || { notFound: true });
     } catch (err) {
       console.error(err);
     }
-
-    setLoading(false);
   };
 
   const text = {
@@ -115,12 +107,6 @@ function RunnerSearch() {
           {text[lang].search}
         </button>
       </div>
-
-      {loading && (
-        <div className="flex justify-center my-6">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-300 border-t-transparent"></div>
-        </div>
-      )}
 
       {result && (
         <div className="relative bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl shadow-xl border border-blue-200 mb-6">
