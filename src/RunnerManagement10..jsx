@@ -177,17 +177,7 @@ function RunnerManagement() {
               <img
                 src={runner.image_url || MOCK_AVATAR}
                 alt={runner.full_name}
-                className={`
-                  w-32 h-32 object-cover rounded-full border-4 shadow-md mb-4
-                  ${runner.shirt_status && runner.registration_status
-                    ? "border-green-600"
-                    : runner.shirt_status
-                      ? "border-blue-500"
-                      : runner.registration_status
-                        ? "border-green-300"  /* ลงทะเบียนแล้ว แต่ยังไม่รับเสื้อ */
-                        : "border-gray-300"
-                  }
-               `}
+                className="w-32 h-32 object-cover rounded-full border-4 border-gray-300 shadow-md mb-4"
               />
 
               {/* Name */}
@@ -246,18 +236,7 @@ function RunnerManagement() {
                 <img
                   src={preview || editRunner.image_url || MOCK_AVATAR}
                   alt={editRunner.full_name}
-                  className={`
-                    w-32 h-32 object-cover rounded-full border-4 shadow-lg cursor-pointer
-                    ${
-                      form.shirt_status && form.registration_status
-                        ? "border-green-600"
-                        : form.shirt_status
-                        ? "border-blue-500"
-                        : form.registration_status
-                        ? "border-green-300"  /* ลงทะเบียนอย่างเดียว = เขียวอ่อน */
-                        : "border-gray-300"
-                    }
-                  `}
+                  className="w-32 h-32 object-cover rounded-full border-4 border-gray-300 shadow-lg cursor-pointer"
                   onClick={() => document.getElementById("fileInput").click()}
                 />
 
@@ -294,7 +273,7 @@ function RunnerManagement() {
 
             {/* Header */}
             <h3 className="text-2xl font-bold text-center text-gray-800 mb-6">
-              ข้อมูล: {editRunner.full_name}
+              แก้ไขข้อมูล: {editRunner.full_name}
             </h3>
 
             {/* Form */}

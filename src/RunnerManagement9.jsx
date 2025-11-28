@@ -13,7 +13,6 @@ function RunnerManagement() {
   const [preview, setPreview] = useState(null);
   const [search, setSearch] = useState("");
   const [confirmBib, setConfirmBib] = useState("");
-  const [saving, setSaving] = useState(false);
 
   // -----------------------------
   // Fetch all runners
@@ -56,23 +55,15 @@ function RunnerManagement() {
     if (!editRunner) return;
     if (!window.confirm("คุณแน่ใจว่าจะบันทึกการแก้ไขใช่หรือไม่?")) return;
 
-    setSaving(true); // ⭐ เริ่มโหลด
-
     const formData = new FormData();
     for (const key in form) {
       if (key === "file") continue;
-      formData.append(
-        key,
-        typeof form[key] === "boolean" ? (form[key] ? "true" : "false") : form[key]
-      );
+      formData.append(key, typeof form[key] === "boolean" ? (form[key] ? "true" : "false") : form[key]);
     }
     if (file) formData.append("file", file);
 
     try {
-      await fetch(
-        `https://rwtf-udon-backend.vercel.app/runner/${editRunner._id}`,
-        { method: "PUT", body: formData }
-      );
+      await fetch(`https://rwtf-udon-backend.vercel.app/runner/${editRunner._id}`, { method: "PUT", body: formData });
       fetchRunners();
       setEditRunner(null);
       setForm({});
@@ -81,8 +72,6 @@ function RunnerManagement() {
     } catch (err) {
       console.error(err);
     }
-
-    setSaving(false); // ⭐ หยุดโหลด
   };
 
   // -----------------------------
@@ -177,17 +166,7 @@ function RunnerManagement() {
               <img
                 src={runner.image_url || MOCK_AVATAR}
                 alt={runner.full_name}
-                className={`
-                  w-32 h-32 object-cover rounded-full border-4 shadow-md mb-4
-                  ${runner.shirt_status && runner.registration_status
-                    ? "border-green-600"
-                    : runner.shirt_status
-                      ? "border-blue-500"
-                      : runner.registration_status
-                        ? "border-green-300"  /* ลงทะเบียนแล้ว แต่ยังไม่รับเสื้อ */
-                        : "border-gray-300"
-                  }
-               `}
+                className="w-32 h-32 object-cover rounded-full border-6 border-gray-300 shadow-md mb-4"
               />
 
               {/* Name */}
@@ -246,18 +225,7 @@ function RunnerManagement() {
                 <img
                   src={preview || editRunner.image_url || MOCK_AVATAR}
                   alt={editRunner.full_name}
-                  className={`
-                    w-32 h-32 object-cover rounded-full border-4 shadow-lg cursor-pointer
-                    ${
-                      form.shirt_status && form.registration_status
-                        ? "border-green-600"
-                        : form.shirt_status
-                        ? "border-blue-500"
-                        : form.registration_status
-                        ? "border-green-300"  /* ลงทะเบียนอย่างเดียว = เขียวอ่อน */
-                        : "border-gray-300"
-                    }
-                  `}
+                  className="w-32 h-32 object-cover rounded-full border-4 border-gray-300 shadow-lg cursor-pointer"
                   onClick={() => document.getElementById("fileInput").click()}
                 />
 
@@ -294,44 +262,25 @@ function RunnerManagement() {
 
             {/* Header */}
             <h3 className="text-2xl font-bold text-center text-gray-800 mb-6">
-              ข้อมูล: {editRunner.full_name}
+              แก้ไขข้อมูล: {editRunner.full_name}
             </h3>
 
             {/* Form */}
             <form onSubmit={handleUpdate} className="grid grid-cols-1 gap-4">
               {/* Personal Info */}
               <div className="grid grid-cols-2 gap-4">
-                {fields.map((f) => {
-                  // ให้ citizen_id เป็นแถวเต็ม
-                  if (f.key === "citizen_id") {
-                    return (
-                      <div key={f.key} className="flex flex-col col-span-2">
-                        <label className="text-gray-700 font-medium mb-1">{f.label}</label>
-                        <input
-                          name={f.key}
-                          value={form[f.key] || ""}
-                          onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-lg p-2 
+                {fields.map((f) => (
+                  <div key={f.key} className="flex flex-col">
+                    <label className="text-gray-700 font-medium mb-1">{f.label}</label>
+                    <input
+                      name={f.key}
+                      value={form[f.key] || ""}
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 rounded-lg p-2 
                    focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        />
-                      </div>
-                    );
-                  }
-
-                  // field อื่น ๆ แสดงเป็น 2 คอลัมน์
-                  return (
-                    <div key={f.key} className="flex flex-col">
-                      <label className="text-gray-700 font-medium mb-1">{f.label}</label>
-                      <input
-                        name={f.key}
-                        value={form[f.key] || ""}
-                        onChange={handleChange}
-                        className="w-full border border-gray-300 rounded-lg p-2 
-                   focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                      />
-                    </div>
-                  );
-                })}
+                    />
+                  </div>
+                ))}
               </div>
 
               {/* Medical Info */}
@@ -436,11 +385,9 @@ function RunnerManagement() {
                 <div className="flex justify-between gap-3">
                   <button
                     type="submit"
-                    disabled={saving}
-                    className={`flex-1 text-white py-2 px-4 rounded-lg shadow-md transition 
-                    ${saving ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"}`}
+                    className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition shadow-md"
                   >
-                    {saving ? "กำลังบันทึก..." : "บันทึกข้อมูล"}
+                    บันทึกการแก้ไข
                   </button>
 
                   <button
