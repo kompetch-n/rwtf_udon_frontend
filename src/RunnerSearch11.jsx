@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { FaGlobe, FaChevronDown, FaChevronUp, FaLine, FaPhone } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-
 
 function RunnerSearch() {
-  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [result, setResult] = useState(null);
   const [lang, setLang] = useState("th");
@@ -13,12 +10,6 @@ function RunnerSearch() {
 
   const handleSearch = async () => {
     if (!query) return;
-
-    // ✅ พิมพ์ /admin แล้วเด้งไป path /admin
-    if (query.trim() === "/admin") {
-      navigate("/admin");
-      return;
-    }
 
     setLoading(true);
     setResult(null);

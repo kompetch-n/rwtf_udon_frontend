@@ -10,9 +10,6 @@ function AdminLayout({ children }) {
   return (
     <div className="min-h-screen bg-gray-100">
       <nav className="bg-white shadow-md p-4 flex justify-center space-x-6">
-        <Link to="/" className="text-gray-600 font-semibold hover:text-gray-800">
-          กลับหน้าแรก
-        </Link>
         <Link to="/admin" className="text-blue-600 font-semibold hover:text-blue-800">
           จัดการนักวิ่ง
         </Link>
@@ -44,7 +41,6 @@ function AdminPasswordGate({ onSuccess }) {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-md w-80">
         <h2 className="text-2xl font-bold mb-4 text-center">กรุณากรอกรหัสผู้ดูแล</h2>
-
         <input
           type="password"
           value={password}
@@ -52,23 +48,12 @@ function AdminPasswordGate({ onSuccess }) {
           placeholder="รหัสผ่าน"
           className="w-full border border-gray-300 rounded-lg p-2 mb-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
-
         {error && <p className="text-red-600 mb-2">{error}</p>}
-
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
         >
           เข้าสู่ระบบ
-        </button>
-
-        {/* ปุ่มกลับหน้าแรก */}
-        <button
-          type="button"
-          onClick={() => window.location.href = "/"}
-          className="w-full mt-3 bg-gray-300 text-gray-800 py-2 rounded-lg hover:bg-gray-400 transition"
-        >
-          กลับไปหน้าหลัก
         </button>
       </form>
     </div>

@@ -201,6 +201,7 @@ function RunnerManagement() {
                 {/* Medical Condition */}
                 {runner.medical_condition &&
                   runner.medical_condition.trim() !== "" &&
+                  runner.medical_condition.trim() !== "ไม่มี" &&
                   runner.medical_condition.trim() !== "-" && (
                     <span title={`มีโรคประจำตัว: ${runner.medical_condition}`}>
                       <FaPills className="w-6 h-6 text-red-500" />
