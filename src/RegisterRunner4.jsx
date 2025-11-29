@@ -8,7 +8,7 @@ function RegisterRunner() {
     reward: "",
     distance: "",
     shirt_size: "",
-    shirt_status: false,
+    shirt_status: "",
     bib: "",
     health_package: false,
     hospital: "",
@@ -23,7 +23,7 @@ function RegisterRunner() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [statusMessage, setStatusMessage] = useState(null);
+  const [result, setResult] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -39,13 +39,14 @@ function RegisterRunner() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // ✅ ตรวจสอบขนาดไฟล์ก่อนส่ง
     if (file && file.size > 5 * 1024 * 1024) {
       alert("ไฟล์ใหญ่เกิน 5MB กรุณาเลือกไฟล์ขนาดเล็กกว่า");
       return;
     }
 
     setLoading(true);
-    setStatusMessage(null);
+    setResult(null);
 
     const formData = new FormData();
     for (const key in form) {
@@ -60,7 +61,10 @@ function RegisterRunner() {
     try {
       const res = await fetch(
         "https://rwtf-udon-backend.vercel.app/register-runner",
-        { method: "POST", body: formData }
+        {
+          method: "POST",
+          body: formData,
+        }
       );
 
       if (!res.ok) {
@@ -73,10 +77,9 @@ function RegisterRunner() {
       const data = await res.json();
       console.log("API response:", data);
 
-      // แสดงสถานะสำเร็จ
-      setStatusMessage("บันทึกข้อมูลสำเร็จ!");
+      setResult(data);
 
-      // รีเซ็ตฟอร์ม
+      // ล้างฟอร์ม
       setForm({
         full_name: "",
         phone: "",
@@ -97,9 +100,6 @@ function RegisterRunner() {
       });
       setFile(null);
       setPreview(null);
-
-      // ลบข้อความสถานะหลัง 5 วินาที
-      setTimeout(() => setStatusMessage(null), 5000);
     } catch (error) {
       console.error("Fetch error:", error);
       alert("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
@@ -121,21 +121,18 @@ function RegisterRunner() {
           placeholder="ชื่อ - นามสกุล"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.full_name}
         />
         <input
           name="phone"
           placeholder="เบอร์โทร"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.phone}
         />
         <input
           name="citizen_id"
           placeholder="เลขบัตรประชาชน"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.citizen_id}
         />
         <input
           name="age"
@@ -143,13 +140,11 @@ function RegisterRunner() {
           placeholder="อายุ"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.age}
         />
         <select
           name="gender"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.gender}
         >
           <option value="">-- เลือกเพศ --</option>
           <option value="ชาย">ชาย</option>
@@ -161,28 +156,24 @@ function RegisterRunner() {
           placeholder="รางวัลที่ได้รับ"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.reward}
         />
         <input
           name="distance"
           placeholder="ระยะทางที่วิ่ง (กม.)"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.distance}
         />
         <input
           name="shirt_size"
           placeholder="Size เสื้อ (S / M / L / XL)"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.shirt_size}
         />
         <input
           name="bib"
           placeholder="เบอร์เสื้อ (BIB)"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.bib}
         />
 
         <div className="flex items-center gap-6">
@@ -225,21 +216,18 @@ function RegisterRunner() {
           placeholder="โรคประจำตัว"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.medical_condition || ""}
         />
         <input
           name="medications"
           placeholder="ยาส่วนตัวที่ต้องพกติดตัว"
           className="w-full border rounded-lg p-2"
           onChange={handleChange}
-          value={form.medications}
         />
         <textarea
           name="note"
           placeholder="หมายเหตุ"
           className="w-full border rounded-lg p-2 h-24"
           onChange={handleChange}
-          value={form.note}
         ></textarea>
 
         {/* Upload Image */}
@@ -264,9 +252,17 @@ function RegisterRunner() {
         </button>
       </div>
 
-      {statusMessage && (
-        <div className="mt-4 p-3 bg-green-100 rounded-lg text-center text-green-700 font-bold">
-          {statusMessage}
+      {result && result.data && result.data.image_url && (
+        <div className="mt-6 p-4 bg-green-100 rounded-lg text-center">
+          <p className="font-bold text-green-700">บันทึกสำเร็จ!</p>
+          <a
+            href={result.data.image_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline"
+          >
+            ดูรูปภาพที่อัปโหลด
+          </a>
         </div>
       )}
     </div>
