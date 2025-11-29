@@ -15,9 +15,6 @@ function RegisterRunner() {
     medications: "",
     note: "",
     registration_status: false,
-    age: "",
-    gender: "",
-    vip: false,
   });
 
   const [file, setFile] = useState(null);
@@ -127,25 +124,6 @@ function RegisterRunner() {
         />
 
         <input
-          name="age"
-          type="number"
-          placeholder="อายุ"
-          className="w-full border rounded-lg p-2"
-          onChange={handleChange}
-        />
-
-        <select
-          name="gender"
-          className="w-full border rounded-lg p-2"
-          onChange={handleChange}
-        >
-          <option value="">-- เลือกเพศ --</option>
-          <option value="ชาย">ชาย</option>
-          <option value="หญิง">หญิง</option>
-          <option value="อื่น ๆ">อื่น ๆ</option>
-        </select>
-
-        <input
           name="reward"
           placeholder="รางวัลที่ได้รับ"
           className="w-full border rounded-lg p-2"
@@ -201,16 +179,6 @@ function RegisterRunner() {
               onChange={handleChange}
             />
             ซื้อแพ็กเกจตรวจสุขภาพ
-          </label>
-
-          <label className="flex items-center gap-2 text-gray-700">
-            <input
-              type="checkbox"
-              name="vip"
-              checked={form.vip}
-              onChange={handleChange}
-            />
-            VIP
           </label>
         </div>
 

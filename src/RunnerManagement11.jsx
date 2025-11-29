@@ -89,24 +89,17 @@ function RunnerManagement() {
   // Delete runner
   // -----------------------------
   const handleDelete = async (runner) => {
-    const inputName = prompt(
-      `เพื่อยืนยันการลบ กรุณาพิมพ์ชื่อของนักวิ่ง: "${runner.full_name}"`
-    );
-
-    if (!inputName) return; // ผู้ใช้กด Cancel หรือไม่กรอก
-
-    if (inputName.trim() !== runner.full_name.trim()) {
-      alert("ชื่อไม่ตรงกัน ไม่สามารถลบข้อมูลได้");
+    const inputBib = prompt(`กรุณากรอกเลข BIB ของนักวิ่ง ${runner.full_name} เพื่อยืนยันการลบข้อมูล`);
+    if (!inputBib) return; // ถ้า cancel หรือไม่กรอก
+    if (inputBib !== runner.bib) {
+      alert("เลข BIB ไม่ตรง ไม่สามารถลบข้อมูลได้");
       return;
     }
 
     if (!window.confirm("คุณแน่ใจว่าจะลบข้อมูลนี้ใช่หรือไม่?")) return;
 
     try {
-      await fetch(`https://rwtf-udon-backend.vercel.app/runner/${runner._id}`, {
-        method: "DELETE",
-      });
-
+      await fetch(`https://rwtf-udon-backend.vercel.app/runner/${runner._id}`, { method: "DELETE" });
       fetchRunners();
       setEditRunner(null);
       setForm({});
@@ -142,9 +135,7 @@ function RunnerManagement() {
     { label: "BIB", key: "bib" },
     { label: "ขนาดเสื้อ", key: "shirt_size" },
     { label: "ระยะทางวิ่ง", key: "distance" },
-    { label: "รางวัลที่ได้รับ", key: "reward" },
-    { label: "อายุ", key: "age" },
-    { label: "เพศ", key: "gender" }
+    { label: "รางวัลที่ได้รับ", key: "reward" }
   ];
 
   const medicalFields = [
@@ -182,15 +173,6 @@ function RunnerManagement() {
               className="bg-white rounded-2xl shadow-md hover:shadow-2xl transition cursor-pointer overflow-hidden p-4 flex flex-col items-center relative"
               onClick={() => handleEdit(runner)}
             >
-              {/* VIP Badge */}
-              {runner.vip && (
-                <span
-                  className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-semibold shadow"
-                  title="VIP Runner"
-                >
-                  ⭐ VIP
-                </span>
-              )}
               {/* Avatar */}
               <img
                 src={runner.image_url || MOCK_AVATAR}
@@ -260,25 +242,20 @@ function RunnerManagement() {
             <div className="flex justify-center mb-4">
               {/* Wrapper for profile + icon */}
               <div className="relative w-32 h-32">
-                {/* VIP Badge */}
-                {form.vip && (
-                  <span className="absolute -top-2 -right-2 bg-yellow-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                    ⭐ VIP
-                  </span>
-                )}
                 {/* Profile Picture */}
                 <img
                   src={preview || editRunner.image_url || MOCK_AVATAR}
                   alt={editRunner.full_name}
                   className={`
                     w-32 h-32 object-cover rounded-full border-4 shadow-lg cursor-pointer
-                    ${form.shirt_status && form.registration_status
-                      ? "border-green-600"
-                      : form.shirt_status
+                    ${
+                      form.shirt_status && form.registration_status
+                        ? "border-green-600"
+                        : form.shirt_status
                         ? "border-blue-500"
                         : form.registration_status
-                          ? "border-green-300"  /* ลงทะเบียนอย่างเดียว = เขียวอ่อน */
-                          : "border-gray-300"
+                        ? "border-green-300"  /* ลงทะเบียนอย่างเดียว = เขียวอ่อน */
+                        : "border-gray-300"
                     }
                   `}
                   onClick={() => document.getElementById("fileInput").click()}
@@ -345,28 +322,13 @@ function RunnerManagement() {
                   return (
                     <div key={f.key} className="flex flex-col">
                       <label className="text-gray-700 font-medium mb-1">{f.label}</label>
-                      {f.key === "gender" ? (
-                        <select
-                          name="gender"
-                          value={form.gender || ""}
-                          onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-lg p-2 
-    focus:ring-2 focus:ring-blue-500 transition"
-                        >
-                          <option value="">-- เลือกเพศ --</option>
-                          <option value="ชาย">ชาย</option>
-                          <option value="หญิง">หญิง</option>
-                          <option value="อื่นๆ">อื่นๆ</option>
-                        </select>
-                      ) : (
-                        <input
-                          name={f.key}
-                          value={form[f.key] || ""}
-                          onChange={handleChange}
-                          className="w-full border border-gray-300 rounded-lg p-2 
-    focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        />
-                      )}
+                      <input
+                        name={f.key}
+                        value={form[f.key] || ""}
+                        onChange={handleChange}
+                        className="w-full border border-gray-300 rounded-lg p-2 
+                   focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                      />
                     </div>
                   );
                 })}
@@ -412,17 +374,6 @@ function RunnerManagement() {
                   />
                   <span className="text-gray-700 font-medium">ลงทะเบียนแล้ว</span>
                 </label> */}
-
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    name="vip"
-                    checked={form.vip || false}
-                    onChange={handleChange}
-                    className="accent-yellow-500"
-                  />
-                  <span className="text-gray-700 font-medium">VIP</span>
-                </label>
 
                 <label className="flex items-center space-x-2">
                   <input
