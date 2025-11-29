@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, PieChart, Pie, Cell,
     ResponsiveContainer, LabelList
@@ -67,34 +65,6 @@ export default function Dashboard() {
     const resetFilters = () => {
         setFilters({ gender: null, distance: null, shirt_size: null });
         setFilteredRunners(runners);
-    };
-
-    // Export to Excel
-    const exportToExcel = () => {
-        const dataToExport = filteredRunners.map(r => ({
-            "ชื่อ": r.full_name,
-            "เบอร์": r.phone,
-            "เลขบัตรประชาชน": r.citizen_id,
-            "รางวัลที่ได้รับ": r.reward,
-            "ระยะทาง": r.distance,
-            "Size เสื้อ": r.shirt_size,
-            "สถานะรับเสื้อ": r.shirt_status ? "ได้รับแล้ว" : "ยังไม่ได้รับ",
-            "BIB": r.bib,
-            "Health Package": r.health_package ? "ใช่" : "ไม่ใช่",
-            "โรคประจำตัว": r.medical_condition,
-            "ยาที่ใช้อยู่": r.medications,
-            "หมายเหตุ": r.note,
-            "อายุ": r.age,
-            "เพศ": r.gender,
-            "VIP": r.vip ? "ใช่" : "ไม่ใช่",
-            "ไฟล์แนบ": r.file || "-"
-        }));
-
-        const ws = XLSX.utils.json_to_sheet(dataToExport);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Runners");
-        const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-        saveAs(new Blob([wbout], { type: "application/octet-stream" }), "runners.xlsx");
     };
 
     // สรุปข้อมูล
@@ -255,20 +225,11 @@ export default function Dashboard() {
 
                     {/* ตารางข้อมูล */}
                     <div className="bg-white shadow rounded-lg p-4 hover:shadow-lg transition">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-xl font-semibold">รายชื่อผู้ลงทะเบียน</h2>
-                            <button
-                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                                onClick={exportToExcel}
-                            >
-                                Export Excel
-                            </button>
-                        </div>
+                        <h2 className="text-xl font-semibold mb-4">รายชื่อผู้ลงทะเบียน</h2>
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                     <tr>
-                                        <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">No.</th>
                                         <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">ชื่อ</th>
                                         <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">เบอร์</th>
                                         <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">เพศ</th>
@@ -279,9 +240,8 @@ export default function Dashboard() {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {filteredRunners.map((r, index) => (
+                                    {filteredRunners.map((r) => (
                                         <tr key={r._id} className="hover:bg-gray-100">
-                                            <td className="px-4 py-2">{index + 1}</td> {/* ตัวเลขลำดับ */}
                                             <td className="px-4 py-2">{r.full_name}</td>
                                             <td className="px-4 py-2">{r.phone}</td>
                                             <td className="px-4 py-2">{r.gender}</td>

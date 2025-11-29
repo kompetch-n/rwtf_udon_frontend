@@ -74,20 +74,11 @@ export default function Dashboard() {
         const dataToExport = filteredRunners.map(r => ({
             "ชื่อ": r.full_name,
             "เบอร์": r.phone,
-            "เลขบัตรประชาชน": r.citizen_id,
-            "รางวัลที่ได้รับ": r.reward,
-            "ระยะทาง": r.distance,
-            "Size เสื้อ": r.shirt_size,
-            "สถานะรับเสื้อ": r.shirt_status ? "ได้รับแล้ว" : "ยังไม่ได้รับ",
-            "BIB": r.bib,
-            "Health Package": r.health_package ? "ใช่" : "ไม่ใช่",
-            "โรคประจำตัว": r.medical_condition,
-            "ยาที่ใช้อยู่": r.medications,
-            "หมายเหตุ": r.note,
-            "อายุ": r.age,
             "เพศ": r.gender,
             "VIP": r.vip ? "ใช่" : "ไม่ใช่",
-            "ไฟล์แนบ": r.file || "-"
+            "ระยะทาง": r.distance,
+            "Size เสื้อ": r.shirt_size,
+            "สถานะรับเสื้อ": r.shirt_status ? "ได้รับแล้ว" : "ยังไม่ได้รับ"
         }));
 
         const ws = XLSX.utils.json_to_sheet(dataToExport);
@@ -268,7 +259,6 @@ export default function Dashboard() {
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                     <tr>
-                                        <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">No.</th>
                                         <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">ชื่อ</th>
                                         <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">เบอร์</th>
                                         <th className="px-4 py-2 text-left text-sm font-medium text-gray-500">เพศ</th>
@@ -279,9 +269,8 @@ export default function Dashboard() {
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                    {filteredRunners.map((r, index) => (
+                                    {filteredRunners.map((r) => (
                                         <tr key={r._id} className="hover:bg-gray-100">
-                                            <td className="px-4 py-2">{index + 1}</td> {/* ตัวเลขลำดับ */}
                                             <td className="px-4 py-2">{r.full_name}</td>
                                             <td className="px-4 py-2">{r.phone}</td>
                                             <td className="px-4 py-2">{r.gender}</td>
