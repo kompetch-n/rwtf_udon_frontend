@@ -14,10 +14,10 @@ function AdminLayout({ children }) {
         <Link to="/" className="text-gray-600 font-semibold hover:text-gray-800">
           กลับหน้าแรก
         </Link>
-        <Link to="/admin" className="text-blue-600 font-semibold hover:text-blue-800">
+        <Link to="/admin/dashboard" className="text-blue-600 font-semibold hover:text-blue-800">
           Dashboard
         </Link>
-        <Link to="/admin/manage" className="text-blue-600 font-semibold hover:text-blue-800">
+        <Link to="/admin" className="text-blue-600 font-semibold hover:text-blue-800">
           จัดการนักวิ่ง
         </Link>
         <Link to="/admin/register" className="text-blue-600 font-semibold hover:text-blue-800">
@@ -95,9 +95,9 @@ function App() {
             adminAccess ? (
               <AdminLayout>
                 <Routes>
-                  <Route path="" element={<Dashboard />} /> {/* <-- Dashboard เป็นหน้า default ของ /admin */}
+                  <Route path="" element={<RunnerManagement />} />
                   <Route path="register" element={<RegisterRunner />} />
-                  <Route path="manage" element={<RunnerManagement />} /> {/* เปลี่ยน path เดิมของ RunnerManagement */}
+                  <Route path="dashboard" element={<Dashboard/>} />
                 </Routes>
               </AdminLayout>
             ) : (
