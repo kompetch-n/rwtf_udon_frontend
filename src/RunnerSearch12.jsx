@@ -27,21 +27,15 @@ function RunnerSearch() {
       const res = await fetch(`https://rwtf-udon-backend.vercel.app/runners`);
       const data = await res.json();
 
-      // ใช้ filter เพื่อเอาทุกคนที่ match
-      const matchedList = data.data.filter(
+      const matched = data.data.find(
         (runner) =>
           runner.full_name.toLowerCase().includes(query.toLowerCase()) ||
           runner.citizen_id.includes(query)
       );
 
-      if (matchedList.length > 0) {
-        setResult(matchedList);
-      } else {
-        setResult([{ notFound: true }]);
-      }
+      setResult(matched || { notFound: true });
     } catch (err) {
       console.error(err);
-      setResult([{ notFound: true }]);
     }
 
     setLoading(false);
@@ -137,45 +131,36 @@ function RunnerSearch() {
         </div>
       )}
 
-
-      {result && result.length > 0 ? (
-        result[0].notFound ? (
-          <div className="relative bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl shadow-xl border border-blue-200 mb-6">
+      {result && (
+        <div className="relative bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl shadow-xl border border-blue-200 mb-6">
+          {result.notFound ? (
             <p className="text-red-500 text-center font-semibold text-lg">
               {text[lang].notFound}
             </p>
-          </div>
-        ) : (
-          result.map((runner, idx) => (
-            <div
-              key={idx}
-              className="relative bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl shadow-xl border border-blue-200 mb-6"
-            >
-              <div className="flex flex-col space-y-3">
-                <p className="text-gray-700 font-medium text-lg">
-                  {text[lang].name}: {runner.full_name}
-                </p>
+          ) : (
+            <div className="flex flex-col space-y-3">
+              <p className="text-gray-700 font-medium text-lg">
+                {text[lang].name}: {result.full_name}
+              </p>
 
-                <div className="text-center py-4 bg-blue-600 text-white font-bold text-2xl rounded-lg shadow-md">
-                  {text[lang].bib}: {runner.bib}
+              <div className="text-center py-4 bg-blue-600 text-white font-bold text-2xl rounded-lg shadow-md">
+                {text[lang].bib}: {result.bib}
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 text-gray-600">
+                <div className="bg-white p-2 rounded-lg shadow-sm text-center">
+                  <p className="font-semibold">{text[lang].distance}</p>
+                  <p>{result.distance}</p>
                 </div>
-
-                <div className="grid grid-cols-2 gap-4 text-gray-600">
-                  <div className="bg-white p-2 rounded-lg shadow-sm text-center">
-                    <p className="font-semibold">{text[lang].distance}</p>
-                    <p>{runner.distance}</p>
-                  </div>
-                  <div className="bg-white p-2 rounded-lg shadow-sm text-center">
-                    <p className="font-semibold">{text[lang].shirt_size}</p>
-                    <p>{runner.shirt_size}</p>
-                  </div>
+                <div className="bg-white p-2 rounded-lg shadow-sm text-center">
+                  <p className="font-semibold">{text[lang].shirt_size}</p>
+                  <p>{result.shirt_size}</p>
                 </div>
               </div>
             </div>
-          ))
-        )
-      ) : null}
-
+          )}
+        </div>
+      )}
 
       {/* Collapsible Activities Section */}
       <div className="mb-6">
@@ -238,7 +223,7 @@ function SectionContact({ lang, text }) {
   return (
     <div className="mt-10 mb-6">
       {/* Sponsors */}
-      {/* <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
+      <div className="flex flex-wrap justify-center items-center gap-4 mb-6">
         {sponsors.map((src, idx) => (
           <img
             key={idx}
@@ -247,7 +232,7 @@ function SectionContact({ lang, text }) {
             className="h-10 w-auto object-contain"
           />
         ))}
-      </div> */}
+      </div>
 
       <h3 className="text-md font-semibold text-gray-700 mb-2">
         {text[lang].contact}
