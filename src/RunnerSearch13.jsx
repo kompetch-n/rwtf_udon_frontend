@@ -30,7 +30,8 @@ function RunnerSearch() {
       // ใช้ filter เพื่อเอาทุกคนที่ match
       const matchedList = data.data.filter(
         (runner) =>
-          runner.full_name.toLowerCase().includes(query.toLowerCase())
+          runner.full_name.toLowerCase().includes(query.toLowerCase()) ||
+          runner.citizen_id.includes(query)
       );
 
       if (matchedList.length > 0) {
@@ -49,7 +50,7 @@ function RunnerSearch() {
   const text = {
     th: {
       title: "ค้นหาเลขเสื้อของคุณ",
-      placeholder: "กรอกชื่อ",
+      placeholder: "กรอกชื่อหรือเลขบัตรประชาชน",
       search: "ค้นหา",
       notFound: "ไม่พบข้อมูลนักวิ่ง",
       name: "ชื่อ",
@@ -66,7 +67,7 @@ function RunnerSearch() {
     },
     en: {
       title: "Find Your BIB Number",
-      placeholder: "Enter Name",
+      placeholder: "Enter Name or Citizen ID",
       search: "Search",
       notFound: "Runner not found",
       name: "Name",
@@ -156,10 +157,7 @@ function RunnerSearch() {
                 </p>
 
                 <div className="text-center py-4 bg-blue-600 text-white font-bold text-2xl rounded-lg shadow-md">
-                  {text[lang].bib}:{" "}
-                  {lang === "en" && runner.bib === "กำลังดำเนินการ"
-                    ? "In progress"
-                    : runner.bib}
+                  {text[lang].bib}: {runner.bib}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 text-gray-600">

@@ -156,10 +156,7 @@ function RunnerSearch() {
                 </p>
 
                 <div className="text-center py-4 bg-blue-600 text-white font-bold text-2xl rounded-lg shadow-md">
-                  {text[lang].bib}:{" "}
-                  {lang === "en" && runner.bib === "กำลังดำเนินการ"
-                    ? "In progress"
-                    : runner.bib}
+                  {text[lang].bib}: {runner.bib}
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 text-gray-600">
