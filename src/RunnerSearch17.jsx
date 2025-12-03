@@ -161,8 +161,8 @@ function RunnerSearch() {
 
                 <div className="text-center py-4 bg-blue-600 text-white font-bold text-3xl rounded-xl shadow">
                   {text[lang].bib}:{" "}
-                  {!runner.bib || runner.bib.trim() === "" || runner.bib === "กำลังดำเนินการ"
-                    ? (lang === "th" ? "กำลังดำเนินการ" : "In progress")
+                  {lang === "en" && runner.bib === "กำลังดำเนินการ"
+                    ? "In progress"
                     : runner.bib}
                 </div>
 
