@@ -84,141 +84,136 @@ function RunnerSearch() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-start md:items-center bg-gray-100 py-10">
+    <div className="max-w-xl mx-auto p-6 bg-white/70 backdrop-blur-md rounded-2xl shadow-lg mt-10 relative border border-gray-100">
 
-      <div className="max-w-xl w-full mx-auto p-6 bg-white/70 backdrop-blur-md rounded-2xl shadow-lg relative border border-gray-100">
-
-        {/* Language Switch */}
-        <button
-          onClick={() => setLang(lang === "th" ? "en" : "th")}
-          className="absolute top-4 right-4 bg-white/70 backdrop-blur-md hover:bg-white p-2 rounded-full shadow 
+      {/* Language Switch */}
+      <button
+        onClick={() => setLang(lang === "th" ? "en" : "th")}
+        className="absolute top-4 right-4 bg-white/70 backdrop-blur-md hover:bg-white p-2 rounded-full shadow 
                border border-gray-200 transition"
-          title="Switch Language"
-        >
-          <FaGlobe className="text-gray-700" />
-        </button>
+        title="Switch Language"
+      >
+        <FaGlobe className="text-gray-700" />
+      </button>
 
-        {/* Logo */}
-        <div className="flex justify-center mb-6 mt-2">
-          <img
-            src="/rwtf_logo.svg"
-            alt="logo"
-            className="w-full max-h-48 object-contain drop-shadow"
-          />
-        </div>
-
-        {/* Title */}
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 tracking-tight">
-          {text[lang].title}
-        </h2>
-
-        {/* Search Box */}
-        <div className="flex space-x-2 mb-6">
-          <input
-            type="text"
-            placeholder={text[lang].placeholder}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleSearch();
-            }}
-            className="flex-1 border border-gray-200 rounded-full p-3 px-5 shadow-sm bg-white/70 backdrop-blur 
-                 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-
-          <button
-            onClick={handleSearch}
-            className="bg-blue-600 text-white px-6 rounded-full font-medium shadow-md hover:bg-blue-700 
-                active:scale-95 transition"
-          >
-            {text[lang].search}
-          </button>
-        </div>
-
-
-        {loading && (
-          <div className="flex justify-center my-6">
-            <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-300 border-t-transparent"></div>
-          </div>
-        )}
-
-
-        {result && result.length > 0 && (
-          result[0].notFound ? (
-            <div className="bg-red-50 border border-red-200 p-4 rounded-xl shadow-sm text-center mb-6">
-              <p className="text-red-600 font-semibold text-lg">{text[lang].notFound}</p>
-            </div>
-          ) : (
-            result.map((runner, idx) => (
-              <div
-                key={idx}
-                className="bg-blue-50 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-gray-100 mb-6 
-                   hover:shadow-xl transition"
-              >
-                <p className="text-gray-800 font-semibold text-xl mb-2">
-                  {text[lang].name}: {runner.full_name}
-                </p>
-
-                <div className="text-center py-4 bg-blue-600 text-white font-bold text-3xl rounded-xl shadow">
-                  {text[lang].bib}:{" "}
-                  {lang === "en" && runner.bib === "กำลังดำเนินการ"
-                    ? "In progress"
-                    : runner.bib}
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mt-4 text-gray-700">
-                  <div className="bg-white rounded-xl shadow p-3 text-center border border-gray-100">
-                    <p className="font-semibold">{text[lang].distance}</p>
-                    <p className="text-gray-600">{runner.distance}</p>
-                  </div>
-                  <div className="bg-white rounded-xl shadow p-3 text-center border border-gray-100">
-                    <p className="font-semibold">{text[lang].shirt_size}</p>
-                    <p className="text-gray-600">{runner.shirt_size}</p>
-                  </div>
-                </div>
-              </div>
-            ))
-          )
-        )}
-
-
-        {/* Collapsible Activities Section */}
-        <div className="mb-6">
-          <button
-            onClick={() => setShowActivities(!showActivities)}
-            className="flex items-center justify-center w-full bg-gray-50 border border-gray-200 
-             text-gray-700 font-medium py-3 rounded-xl shadow-sm hover:bg-gray-100 
-             transition active:scale-95"
-          >
-            {showActivities ? (
-              <>
-                <FaChevronUp className="mr-2" />
-                {text[lang].hideActivities}
-              </>
-            ) : (
-              <>
-                <FaChevronDown className="mr-2" />
-                {text[lang].showActivities}
-              </>
-            )}
-          </button>
-
-          {showActivities && (
-            <div className="mt-4 space-y-6">
-              <Section title={text[lang].awards} img="/awards.svg" />
-              <Section title={text[lang].souvenir} img="/souvenir.svg" />
-              <Section title={text[lang].route} img="/route_map.svg" />
-              <Section title={text[lang].schedule} img="/schedule.svg" />
-            </div>
-          )}
-        </div>
-
-        {/* Contact Section แยกด้านล่าง ไม่ซ่อน */}
-        <SectionContact lang={lang} text={text} />
+      {/* Logo */}
+      <div className="flex justify-center mb-6 mt-2">
+        <img
+          src="/rwtf_logo.svg"
+          alt="logo"
+          className="w-full max-h-48 object-contain drop-shadow"
+        />
       </div>
 
-    </div>
+      {/* Title */}
+      <h2 className="text-3xl font-bold mb-6 text-center text-gray-800 tracking-tight">
+        {text[lang].title}
+      </h2>
 
+      {/* Search Box */}
+      <div className="flex space-x-2 mb-6">
+        <input
+          type="text"
+          placeholder={text[lang].placeholder}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSearch();
+          }}
+          className="flex-1 border border-gray-200 rounded-full p-3 px-5 shadow-sm bg-white/70 backdrop-blur 
+                 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        <button
+          onClick={handleSearch}
+          className="bg-blue-600 text-white px-6 rounded-full font-medium shadow-md hover:bg-blue-700 
+                active:scale-95 transition"
+        >
+          {text[lang].search}
+        </button>
+      </div>
+
+
+      {loading && (
+        <div className="flex justify-center my-6">
+          <div className="animate-spin rounded-full h-8 w-8 border-4 border-blue-300 border-t-transparent"></div>
+        </div>
+      )}
+
+
+      {result && result.length > 0 && (
+        result[0].notFound ? (
+          <div className="bg-red-50 border border-red-200 p-4 rounded-xl shadow-sm text-center mb-6">
+            <p className="text-red-600 font-semibold text-lg">{text[lang].notFound}</p>
+          </div>
+        ) : (
+          result.map((runner, idx) => (
+            <div
+              key={idx}
+              className="bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-lg border border-gray-100 mb-6 
+                   hover:shadow-xl transition"
+            >
+              <p className="text-gray-800 font-semibold text-xl mb-2">
+                {text[lang].name}: {runner.full_name}
+              </p>
+
+              <div className="text-center py-4 bg-blue-600 text-white font-bold text-3xl rounded-xl shadow">
+                {text[lang].bib}:{" "}
+                {lang === "en" && runner.bib === "กำลังดำเนินการ"
+                  ? "In progress"
+                  : runner.bib}
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mt-4 text-gray-700">
+                <div className="bg-white rounded-xl shadow p-3 text-center border border-gray-100">
+                  <p className="font-semibold">{text[lang].distance}</p>
+                  <p className="text-gray-600">{runner.distance}</p>
+                </div>
+                <div className="bg-white rounded-xl shadow p-3 text-center border border-gray-100">
+                  <p className="font-semibold">{text[lang].shirt_size}</p>
+                  <p className="text-gray-600">{runner.shirt_size}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        )
+      )}
+
+
+      {/* Collapsible Activities Section */}
+      <div className="mb-6">
+        <button
+          onClick={() => setShowActivities(!showActivities)}
+          className="flex items-center justify-center w-full bg-gray-50 border border-gray-200 
+             text-gray-700 font-medium py-3 rounded-xl shadow-sm hover:bg-gray-100 
+             transition active:scale-95"
+        >
+          {showActivities ? (
+            <>
+              <FaChevronUp className="mr-2" />
+              {text[lang].hideActivities}
+            </>
+          ) : (
+            <>
+              <FaChevronDown className="mr-2" />
+              {text[lang].showActivities}
+            </>
+          )}
+        </button>
+
+        {showActivities && (
+          <div className="mt-4 space-y-6">
+            <Section title={text[lang].awards} img="/awards.svg" />
+            <Section title={text[lang].souvenir} img="/souvenir.svg" />
+            <Section title={text[lang].route} img="/route_map.svg" />
+            <Section title={text[lang].schedule} img="/schedule.svg" />
+          </div>
+        )}
+      </div>
+
+      {/* Contact Section แยกด้านล่าง ไม่ซ่อน */}
+      <SectionContact lang={lang} text={text} />
+    </div>
   );
 }
 
